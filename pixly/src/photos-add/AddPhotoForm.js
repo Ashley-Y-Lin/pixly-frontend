@@ -39,7 +39,7 @@ function AddPhotoForm({ addPhoto }) {
       await addPhoto(newPhotoData);
       setSuccessMsg(`Photo ${formData.caption} was added!`);
       setFormData(initialFormData);
-      navigate("/");
+      navigate("/photos");
     } catch (err) {
       setAlertMsgs(err);
     }

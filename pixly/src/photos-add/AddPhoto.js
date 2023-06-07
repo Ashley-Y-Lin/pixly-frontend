@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import PixlyApi from "../api";
+import photosContext from "../photosContext";
 
 import AddPhotoForm from "./AddPhotoForm";
 
@@ -14,10 +15,16 @@ import AddPhotoForm from "./AddPhotoForm";
  */
 
 function AddPhoto() {
+  const { photosData, setPhotosData } = useContext(photosContext);
 
   /** Triggered by AddPhotoForm submit; adds photo to system. */
   async function addPhoto(formData) {
-    await PixlyApi.addPhoto(formData);
+    const newPhoto = await PixlyApi.addPhoto(formData);
+    const newPhotoState = {
+      data: [...photosData, { ...newPhoto }],
+      isLoading: true
+    }
+    setPhotosData(newPhotoState);
   }
 
   return (

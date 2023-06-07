@@ -1,4 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
+import "./PhotosList.css";
+
+import photosContext from "../photosContext";
 
 /** Displays images for all photos on the site, and a form that
  * allows users to search images by caption.
@@ -9,8 +13,25 @@ import React from "react";
  */
 
 function PhotosList() {
+  const { photosData } = useContext(photosContext);
+
   return (
     <div className="PhotosList">
+      <h1>Check out all the photos!</h1>
+      <p>Search for a photo and click for more information about it.</p>
+
+      <div className="PhotosArea">{photosData.map(photo => (
+        <div key={photo.id}>
+          <Link to={`/photos/${photo.id}`}>
+            <img
+              className="photoImage"
+              src={`${photo.aws_s3}`}
+              alt={`${photo.caption}`}
+            ></img>
+          </Link>
+        </div>
+      ))}</div>
+
     </div>
   );
 }

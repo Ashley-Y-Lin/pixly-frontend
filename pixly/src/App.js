@@ -18,14 +18,14 @@ import RoutesList from "./routes-nav/RoutesList";
 
 function App() {
   const [photos, setPhotos] = useState({
-    data: {},
+    data: [],
     isLoading: true
   });
 
   async function loadPhotos() {
     const response = await PixlyApi.getPhotos();
     setPhotos({
-      data: response.data,
+      data: response,
       isLoading: false
     });
   }
@@ -36,7 +36,7 @@ function App() {
   }
 
   return (
-    <photosContext.Provider value={{ photosData: photos }}>
+    <photosContext.Provider value={{ photosData: photos.data, setPhotosData: setPhotos }}>
       <BrowserRouter>
         <div className="App">
           <Navigation />

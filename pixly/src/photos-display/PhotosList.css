@@ -1,0 +1,10 @@
+.PhotosList .PhotosArea {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.PhotosList .photoImage {
+    max-width: 300px;
+}

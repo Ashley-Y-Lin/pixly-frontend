@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5001/api/";
+const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5001/api";
 
 /** API Class.
  *
@@ -37,11 +37,14 @@ class PixlyApi {
   }
 
   /** addPhoto adds a photo to the system, takes as input JSON like
-   * { caption, aws_s3, exif_data }
+   * { caption, fileObject }
+   *
+   * Python in backend adds id, aws_link, and exif_data. Returns JSON like
+   * { id, caption, aws_s3, exif_data }
   */
 
-  static async addPhoto(formData = {}) {
-    let res = await this.request("photos", formData, "post");
+  static async addPhoto(formData) {
+    let res = await this.request("photos", formData, "POST");
     return res.photo;
   }
 

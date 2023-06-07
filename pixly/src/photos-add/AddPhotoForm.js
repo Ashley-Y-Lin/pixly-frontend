@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { uploadPhotoS3 } from "../aws";
 
 import Success from "../common/Success";
 import Alert from "../common/Alert";
@@ -29,28 +28,21 @@ function AddPhotoForm({ addPhoto }) {
   /** Tell parent to add photo to system */
   async function handleSubmit(evt) {
     evt.preventDefault();
-    console.log("addPhoto form data", formData);
 
     const fileObject = document.getElementById("addPhotoForm-file").files[0];
-    console.log("file object", fileObject);
 
-    const filePath = await uploadPhotoS3(fileObject);
-    console.log("s3 filePath", filePath)
+    const newPhotoData = new FormData();
+    newPhotoData.append("caption", formData.caption);
+    newPhotoData.append("fileObject", fileObject);
 
-    // let newPhotoData = {
-    //   "caption": formData.caption,
-    //   "aws_s3": filePath
-    // };
-    // console.log("newPhotoData", newPhotoData);
-
-    // try {
-    //   await addPhoto(formData);
-    //   setSuccessMsg(`Photo ${formData.caption} was added!`);
-    //   setFormData(initialFormData);
-    //   navigate("/");
-    // } catch (err) {
-    //   setAlertMsgs(err);
-    // }
+    try {
+      await addPhoto(newPhotoData);
+      setSuccessMsg(`Photo ${formData.caption} was added!`);
+      setFormData(initialFormData);
+      navigate("/");
+    } catch (err) {
+      setAlertMsgs(err);
+    }
   }
 
   /** Update form input. */

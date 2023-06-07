@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import PixlyApi from "../api";
 
 import AddPhotoForm from "./AddPhotoForm";
@@ -17,7 +17,7 @@ function AddPhoto() {
 
   /** Triggered by AddPhotoForm submit; adds photo to system. */
   async function addPhoto(formData) {
-    let photo = await PixlyApi.addPhoto(formData);
+    await PixlyApi.addPhoto(formData);
   }
 
   return (

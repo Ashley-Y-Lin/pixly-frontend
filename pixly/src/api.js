@@ -29,7 +29,7 @@ class PixlyApi {
   // Individual API routes
 
   /** getPhotos returns all photos in the system, like
-     * [ { id, caption, aws_s3, exif_data }... ] */
+     * [ { id, caption, file_name, aws_s3, exif_data }... ] */
 
   static async getPhotos() {
     let res = await this.request("photos");
@@ -40,12 +40,19 @@ class PixlyApi {
    * { caption, fileObject }
    *
    * Python in backend adds id, aws_link, and exif_data. Returns JSON like
-   * { id, caption, aws_s3, exif_data }
+   * { id, caption, file_name, aws_s3, exif_data }
   */
 
   static async addPhoto(formData) {
     let res = await this.request("photos", formData, "POST");
     return res.photo;
+  }
+
+  /** deletePhoto removes a photo from the system. */
+
+  static async deletePhoto(photoId) {
+    let res = await this.request(`photos/${photoId}`, {}, "DELETE");
+    return res.deleted;
   }
 
 }

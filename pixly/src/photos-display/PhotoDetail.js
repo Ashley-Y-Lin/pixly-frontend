@@ -18,18 +18,16 @@ function PhotoDetail() {
   const { photosData, setPhotosData } = useContext(photosContext);
   const navigate = useNavigate();
 
+  //FIXME: call the backend method to get a photo, JS is very slow at filtering
+
   const foundPhoto = photosData.find(photo => photo.id === parseInt(photo_id));
   if (!foundPhoto) return <Navigate to="/photos" />;
 
   /** Triggered by Delete Photo button click; removes photo from system. */
   async function deletePhoto() {
-    console.log("delete photo is triggered");
-
     const deletedPhoto = await PixlyApi.deletePhoto(foundPhoto.id);
-    console.log("deleted photo filename", deletedPhoto);
 
     const updatedPhotosData = photosData.filter(photo => photo.id !== photo_id);
-    console.log("updatedPhotosData", updatedPhotosData);
 
     setPhotosData({
       data: updatedPhotosData,

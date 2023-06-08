@@ -55,6 +55,17 @@ class PixlyApi {
     return res.deleted;
   }
 
+  /** searchCaption returns all photos with a caption that includes the query.
+   *
+   * It returns a list of photo objects, like
+   * [ { id, caption, file_name, aws_s3, exif_data }... ]
+  */
+
+  static async searchCaption(searchTerm) {
+    let res = await this.request(`photos/search/${searchTerm}`);
+    return res.photos;
+  }
+
 }
 
 export default PixlyApi;

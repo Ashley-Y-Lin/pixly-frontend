@@ -6,11 +6,12 @@ import React, { useState } from "react";
  *
  * Props:
  * - searchCaptionsFor: fn from parent
+ * - handleResetSearch: fn from parent, reset search
  *
  * { PhotosList, EditPhotosList } -> PhotosSearch -> SearchForm
  */
 
-function CaptionSearchForm({ searchCaptionsFor }) {
+function CaptionSearchForm({ searchCaptionsFor, handleResetSearch }) {
   const [searchTerm, setSearchTerm] = useState("");
 
   /** Tell parent to filter */
@@ -42,6 +43,9 @@ function CaptionSearchForm({ searchCaptionsFor }) {
           <div className="col-auto">
             <button type="submit" className="btn btn-lg btn-primary">
               Search!
+            </button>
+            <button type="button" className="btn btn-lg btn-secondary" onClick={handleResetSearch}>
+              Reset Search
             </button>
           </div>
         </div>

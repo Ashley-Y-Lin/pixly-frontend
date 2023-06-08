@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import PixlyApi from "../api";
 import photosContext from "../photosContext";
+import "./PhotosSearch.css";
 
 import CaptionSearchForm from "./CaptionSearchForm";
 import AdvancedSearchForm from "./AdvancedSearchForm";
@@ -18,7 +19,7 @@ import AdvancedSearchForm from "./AdvancedSearchForm";
  */
 
 function PhotosSearch({ updateDisplayedPhotos }) {
-  const { setPhotosData } = useContext(photosContext);
+  const { photosData, setPhotosData } = useContext(photosContext);
   const [searchOption, setSearchOption] = useState("caption");
 
   /** Triggered by CaptionSearch submit; updates displayedPhotos (array of
@@ -28,9 +29,17 @@ function PhotosSearch({ updateDisplayedPhotos }) {
     const filteredPhotos = await PixlyApi.searchCaption(searchTerm);
     const newPhotoState = {
       data: [...filteredPhotos],
-      isLoading: true
+      isLoading: false
     };
     setPhotosData(newPhotoState);
+  }
+
+  function handleResetSearch() {
+    const resetPhotoState = {
+      data: [...photosData],
+      isLoading: true
+    };
+    setPhotosData(resetPhotoState);
   }
 
   // TODO: add async fn to handle AdvancedSearch submit
@@ -43,8 +52,6 @@ function PhotosSearch({ updateDisplayedPhotos }) {
 
   return (
     <div className="PhotosSearch">
-      <p>Search for a specific photo.</p>
-
       <form className="searchOptionForm">
         <label htmlFor="choose-search">Pick a search option:</label>
         <div>
@@ -61,7 +68,10 @@ function PhotosSearch({ updateDisplayedPhotos }) {
       </form>
 
       {searchOption === "caption"
-        ? <CaptionSearchForm searchCaptionsFor={handleCaptionSearch} />
+        ? <CaptionSearchForm
+          searchCaptionsFor={handleCaptionSearch}
+          handleResetSearch={handleResetSearch}
+        />
         : <AdvancedSearchForm />
       }
     </div>

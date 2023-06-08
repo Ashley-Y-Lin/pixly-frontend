@@ -4,7 +4,3 @@
     flex-wrap: wrap;
     justify-content: space-around;
 }
-
-.PhotosList .photoImage {
-    max-width: 300px;
-}

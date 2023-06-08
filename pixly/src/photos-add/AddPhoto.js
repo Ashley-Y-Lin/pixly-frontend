@@ -8,9 +8,6 @@ import AddPhotoForm from "./AddPhotoForm";
  *
  * Routed at /add
  *
- * Props:
- * - addPhoto: function from parent, passed to AddPhotoForm
- *
  * RoutesList -> AddPhoto -> AddPhotoForm
  */
 
@@ -23,7 +20,7 @@ function AddPhoto() {
     const newPhotoState = {
       data: [...photosData, { ...newPhoto }],
       isLoading: true
-    }
+    };
     setPhotosData(newPhotoState);
   }
 

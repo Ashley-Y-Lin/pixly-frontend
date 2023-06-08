@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import "./PhotosList.css";
 
+import PhotoImage from "./PhotoImage";
 import photosContext from "../photosContext";
 
 /** Displays images for all photos on the site, and a form that
@@ -23,11 +24,7 @@ function PhotosList() {
       <div className="PhotosArea">{photosData.map(photo => (
         <div key={photo.id}>
           <Link to={`/photos/${photo.id}`}>
-            <img
-              className="photoImage"
-              src={`${photo.aws_s3}`}
-              alt={`${photo.caption}`}
-            ></img>
+            <PhotoImage photo={photo} />
           </Link>
         </div>
       ))}</div>

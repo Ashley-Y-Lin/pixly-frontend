@@ -1,26 +1,26 @@
 import React, { useState } from "react";
 
-/** Renders Caption Search Form. Allows user to enter phrase, that filters down
- * photo based on caption. Calls fn passed down by parent, which resets
+/** Renders Metadata Search Form. Allows user to select serach for specific
+ * meta-data fields and values, and filters down photos based on these
+ * requirements. Calls fn passed down by parent, which resets
  * photos state in App.
  *
  * Props:
- * - searchCaptionsFor: fn from parent
+ * - searchMetadataFor: fn from parent
  * - handleResetSearch: fn from parent, reset search
  *
- * PhotosList -> PhotosSearch -> CaptionSearchForm
+ * PhotosList -> PhotosSearch -> AdvancedSearchForm
  */
 
-
-function CaptionSearchForm({ searchCaptionsFor, handleResetSearch }) {
+function MetadataSearchForm({ searchMetadataFor, handleResetSearch }) {
   const [searchTerm, setSearchTerm] = useState("");
 
   /** Tell parent to filter */
   function handleSubmit(evt) {
-    // take care of accidentally trying to search for just spaces
     evt.preventDefault();
-    searchCaptionsFor(searchTerm.trim() || undefined);
-    setSearchTerm(searchTerm.trim());
+    const trimmedSearch = searchTerm.replace(/\s/g, '');
+    searchMetadataFor(trimmedSearch);
+    setSearchTerm(trimmedSearch);
   }
 
   /** Update form fields */
@@ -29,8 +29,16 @@ function CaptionSearchForm({ searchCaptionsFor, handleResetSearch }) {
   }
 
   return (
-    <div className="CaptionSearchForm mb-4">
+    <div className="MetadataSearchForm mb-4">
       <form onSubmit={handleSubmit}>
+        <div>
+          <p>Input search terms for specific metadata fields with name:value.</p>
+          <ul>
+            <li>Search for multiple fields by separating searches with a comma.</li>
+            <li>Some common metadata fields include Make, Model, and DateTime.</li>
+            <li><em>Example search: Make:Canon,Model:IXUS</em></li>
+          </ul>
+        </div>
         <div className="row justify-content-center justify-content-lg-start gx-0">
           <div className="col-8">
             <input
@@ -41,6 +49,7 @@ function CaptionSearchForm({ searchCaptionsFor, handleResetSearch }) {
               onChange={handleChange}
             />
           </div>
+
           <div className="col-auto">
             <button type="submit" className="btn btn-lg btn-primary">
               Search!
@@ -55,4 +64,4 @@ function CaptionSearchForm({ searchCaptionsFor, handleResetSearch }) {
   );
 }
 
-export default CaptionSearchForm;
+export default MetadataSearchForm;

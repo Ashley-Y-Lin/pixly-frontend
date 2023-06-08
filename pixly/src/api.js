@@ -66,6 +66,20 @@ class PixlyApi {
     return res.photos;
   }
 
+  /** searchMetadata returns all photos with metadata that fulfills
+   * query requirements.
+   *
+   * Takes as input
+   *
+   * It returns a list of photo objects, like
+   * [ { id, caption, file_name, aws_s3, exif_data }... ]
+  */
+
+  static async searchMetadata(searchTerm) {
+    let res = await this.request("photos/search", searchTerm, "POST");
+    return res.photos;
+  }
+
 }
 
 export default PixlyApi;

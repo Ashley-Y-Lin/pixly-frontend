@@ -36,11 +36,12 @@ function PhotoDetail() {
     navigate("/photos");
   }
 
+  //TODO: at some point make the caption uppercase
+
   return (
     <div className="PhotoDetail">
       <h1>
-        {foundPhoto.caption[0].toUpperCase() +
-          foundPhoto.caption.slice(1).toLowerCase()}
+        foundPhoto.caption
       </h1>
 
       <PhotoImage photo={foundPhoto} />

@@ -4,7 +4,7 @@ import photosContext from "../photosContext";
 import "./PhotosSearch.css";
 
 import CaptionSearchForm from "./CaptionSearchForm";
-import AdvancedSearchForm from "./AdvancedSearchForm";
+import MetadataSearchForm from "./MetadataSearchForm";
 
 /** Displays buttons that allow users to select a search form, and renders
  * the selected form, which allows users to filter displayedPhotos.
@@ -18,15 +18,27 @@ import AdvancedSearchForm from "./AdvancedSearchForm";
  * { PhotoList, EditPhotosList } -> PhotosSearch
  */
 
-function PhotosSearch({ updateDisplayedPhotos }) {
+function PhotosSearch() {
   const { photosData, setPhotosData } = useContext(photosContext);
   const [searchOption, setSearchOption] = useState("caption");
 
-  /** Triggered by CaptionSearch submit; updates displayedPhotos (array of
+  /** Triggered by CaptionSearchForm submit; updates displayedPhotos (array of
    * photo objects) in parent. */
 
   async function handleCaptionSearch(searchTerm) {
     const filteredPhotos = await PixlyApi.searchCaption(searchTerm);
+    const newPhotoState = {
+      data: [...filteredPhotos],
+      isLoading: false
+    };
+    setPhotosData(newPhotoState);
+  }
+
+  /** Triggered by MetadataSearchForm submit; updates displayedPhotos (array of
+   * photo objects) in parent. */
+
+  async function handleMetadataSearch(formData) {
+    const filteredPhotos = await PixlyApi.searchMetadata(formData);
     const newPhotoState = {
       data: [...filteredPhotos],
       isLoading: false
@@ -41,8 +53,6 @@ function PhotosSearch({ updateDisplayedPhotos }) {
     };
     setPhotosData(resetPhotoState);
   }
-
-  // TODO: add async fn to handle AdvancedSearch submit
 
   /** Update searchOptionForm with selected search option */
   function handleChange(evt) {
@@ -62,7 +72,7 @@ function PhotosSearch({ updateDisplayedPhotos }) {
             className="form-control form-control-sm d-inline-flex"
           >
             <option value={"caption"}>Caption Search</option>
-            <option value={"advanced"}>Advanced Search</option>
+            <option value={"advanced"}>Metadata Search</option>
           </select>
         </div>
       </form>
@@ -72,7 +82,10 @@ function PhotosSearch({ updateDisplayedPhotos }) {
           searchCaptionsFor={handleCaptionSearch}
           handleResetSearch={handleResetSearch}
         />
-        : <AdvancedSearchForm />
+        : <MetadataSearchForm
+          searchMetadataFor={handleMetadataSearch}
+          handleResetSearch={handleResetSearch}
+        />
       }
     </div>
   );

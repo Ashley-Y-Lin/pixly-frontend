@@ -33,6 +33,9 @@ function PhotoEditOptions({ photoData }) {
     setEditingImage(true);
   }
 
+  //FIXME: when you click on two edit options right after the other (without
+  //saving or downloading), the preview photo isn't updated.
+
   return (
     <div className="PhotoEditOptions">
       <h3>Photo Edit Options</h3>
@@ -42,11 +45,14 @@ function PhotoEditOptions({ photoData }) {
         <button onClick={() => handleEdit("blackAndWhite")}>
           Black & White
         </button>
-        <button onClick={() => handleEdit("pixelate")}>
-          Pixelate
+        <button onClick={() => handleEdit("addBorder")}>
+          Add Border
         </button>
-        <button onClick={() => handleEdit("scramble")}>
-          Scramble
+        <button onClick={() => handleEdit("invertColors")}>
+          Invert Colors
+        </button>
+        <button onClick={() => handleEdit("sketch")}>
+          Sketch
         </button>
       </div>
 

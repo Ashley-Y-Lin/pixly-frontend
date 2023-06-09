@@ -3,6 +3,7 @@ import PixlyApi from "../api";
 import photosContext from "../photosContext";
 
 import AddPhotoForm from "./AddPhotoForm";
+import "./AddPhoto.css";
 
 /** Displays form for users to add a photo to site.
  *
@@ -26,8 +27,20 @@ function AddPhoto() {
 
   return (
     <div className="AddPhoto">
-      <h1>Add a photo to Pix.ly!</h1>
-      <AddPhotoForm addPhoto={addPhoto} />
+      <h1>Add a photo to Pix.ly</h1>
+
+      <div className="AddPhotosArea">
+        <div>
+          <h3>Upload a photo!</h3>
+          <AddPhotoForm addPhoto={addPhoto} />
+        </div>
+
+        <div>
+          <h3>Quick upload.</h3>
+          <button>Add 10 photos from NASA!</button>
+        </div>
+      </div>
+
     </div>
   );
 }

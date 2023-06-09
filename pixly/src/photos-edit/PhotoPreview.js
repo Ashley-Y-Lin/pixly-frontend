@@ -39,6 +39,23 @@ function PhotoPreview({ previewData }) {
     // call setPhotosData
   }
 
+  /** handleDownload allows the user to download preview image onto their
+   * local machine.
+   */
+  function handleDownload() {
+    fetch(previewData.aws_s3)
+      .then((response) => response.blob())
+      .then((blob) => {
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = previewData.file_name;
+
+        link.click();
+
+        URL.revokeObjectURL(link.href);
+      });
+  }
+
   return (
     <div className="PhotoPreview">
 
@@ -50,7 +67,7 @@ function PhotoPreview({ previewData }) {
 
       <div className="photoUpdateButtons">
         <button onClick={handleSave}>Save Image</button>
-        <button>Download Image</button>
+        <button onClick={handleDownload}>Download Image</button>
       </div>
     </div>
   );

@@ -91,6 +91,22 @@ class PixlyApi {
     return res.photos;
   }
 
+  /** createEditPreview edits a photo, and saves a preview of edited photo
+   * image in AWS S3. Returns the AWS S3 URL.
+   *
+   * Takes as input JSON like { photoData, editType }
+        where photoData is { id, caption, file_name, aws_s3, exif_data }
+        and editType is a string like "pixelate" or "blackAndWhite"
+   *
+   * Python in backend adds id, aws_link, and exif_data. Returns JSON like
+   * { id, caption, file_name, aws_s3, exif_data }
+  */
+
+  static async createEditPreview(photoId, editData) {
+    let res = await this.request(`photos/edit/${photoId}`, editData, "POST");
+    return res.editedPhotoURL;
+  }
+
 }
 
 export default PixlyApi;

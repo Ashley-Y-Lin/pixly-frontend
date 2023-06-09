@@ -36,6 +36,14 @@ class PixlyApi {
     return res.photos;
   }
 
+  /** getPhoto returns a single photo in the system, like
+     * { id, caption, file_name, aws_s3, exif_data } */
+
+  static async getPhoto(photoId) {
+    let res = await this.request(`photos/${photoId}`);
+    return res.photo;
+  }
+
   /** addPhoto adds a photo to the system, takes as input JSON like
    * { caption, fileObject }
    *
@@ -48,6 +56,19 @@ class PixlyApi {
     return res.photo;
   }
 
+  /** updatePhoto updates a photo in the system.
+   *
+   * Takes as input JSON like {"caption": string}
+   *
+   * Returns updated photo object in JSON,
+   *  like {id, caption, file_name, aws_s3, exif_data}
+   */
+
+  static async updatePhoto(photoId, newCaption) {
+    let res = await this.request(`photos/${photoId}`, newCaption, "PATCH");
+    return res.photo;
+  }
+
   /** deletePhoto removes a photo from the system. */
 
   static async deletePhoto(photoId) {
@@ -55,28 +76,18 @@ class PixlyApi {
     return res.deleted;
   }
 
-  /** searchCaption returns all photos with a caption that includes the query.
+  /** searchPhoto takes as input a type (string, "caption" or "exif_data") and
+   * a searchTerm (string). It returns all photos with either a caption or
+   * exif_data as specified in the searchTerm.
+   *
+   * For exif_data, the search term is a formatted string like 'Make:Canon,Model:400'.
    *
    * It returns a list of photo objects, like
    * [ { id, caption, file_name, aws_s3, exif_data }... ]
   */
 
-  static async searchCaption(searchTerm) {
-    let res = await this.request(`photos/search/${searchTerm}`);
-    return res.photos;
-  }
-
-  /** searchMetadata returns all photos with metadata that fulfills
-   * query requirements.
-   *
-   * Takes as input
-   *
-   * It returns a list of photo objects, like
-   * [ { id, caption, file_name, aws_s3, exif_data }... ]
-  */
-
-  static async searchMetadata(searchTerm) {
-    let res = await this.request("photos/search", searchTerm, "POST");
+  static async searchPhoto(type, searchTerm) {
+    let res = await this.request(`photos/search-${type}/${searchTerm}`);
     return res.photos;
   }
 

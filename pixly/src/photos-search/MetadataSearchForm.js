@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 
-/** Renders Metadata Search Form. Allows user to select serach for specific
- * meta-data fields and values, and filters down photos based on these
- * requirements. Calls fn passed down by parent, which resets
- * photos state in App.
+/** Renders Metadata Search Form. Allows user to search for specific values
+ * in the meta-data, and filters down photos based. Calls fn passed down by
+ * parent, which resets photos state in App.
  *
  * Props:
  * - searchMetadataFor: fn from parent
@@ -19,7 +18,7 @@ function MetadataSearchForm({ searchMetadataFor, handleResetSearch }) {
   function handleSubmit(evt) {
     evt.preventDefault();
     const trimmedSearch = searchTerm.replace(/\s/g, '');
-    searchMetadataFor(trimmedSearch);
+    searchMetadataFor("metadata", trimmedSearch);
     setSearchTerm(trimmedSearch);
   }
 
@@ -31,14 +30,14 @@ function MetadataSearchForm({ searchMetadataFor, handleResetSearch }) {
   return (
     <div className="MetadataSearchForm mb-4">
       <form onSubmit={handleSubmit}>
-        <div>
+        {/* <div>
           <p>Input search terms for specific metadata fields with name:value.</p>
           <ul>
             <li>Search for multiple fields by separating searches with a comma.</li>
             <li>Some common metadata fields include Make, Model, and DateTime.</li>
             <li><em>Example search: Make:Canon,Model:IXUS</em></li>
           </ul>
-        </div>
+        </div> */}
         <div className="row justify-content-center justify-content-lg-start gx-0">
           <div className="col-8">
             <input

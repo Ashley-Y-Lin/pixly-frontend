@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Homepage from "../homepage/Homepage";
 import PhotosList from "../photos-display/PhotosList";
 import PhotoDetail from "../photos-display/PhotoDetail";
+import PhotoEdit from "../photos-edit/PhotoEdit";
 import AddPhoto from "../photos-add/AddPhoto";
 
 
@@ -15,11 +16,12 @@ function RoutesList() {
   return (
     <div className="RoutesList pt-5">
       <Routes>
-        <Route path="/" element={<Homepage />}/>
-        <Route path="/photos" element={<PhotosList />}/>
-        <Route path="/photos/:photo_id" element={<PhotoDetail />}/>
-        <Route path="/add" element={<AddPhoto />}/>
-        <Route path="*" element={<Navigate to="/" /> } />
+        <Route path="/" element={<Homepage />} />
+        <Route path="/photos" element={<PhotosList />} />
+        <Route path="/photos/:photo_id" element={<PhotoDetail />} />
+        <Route path="/edit/:photo_id" element={<PhotoEdit />} />
+        <Route path="/add" element={<AddPhoto />} />
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </div>
   );

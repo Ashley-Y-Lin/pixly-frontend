@@ -19,7 +19,7 @@ function CaptionSearchForm({ searchCaptionsFor, handleResetSearch }) {
   function handleSubmit(evt) {
     // take care of accidentally trying to search for just spaces
     evt.preventDefault();
-    searchCaptionsFor(searchTerm.trim() || undefined);
+    searchCaptionsFor("caption", searchTerm.trim() || undefined);
     setSearchTerm(searchTerm.trim());
   }
 

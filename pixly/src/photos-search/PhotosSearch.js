@@ -23,22 +23,14 @@ function PhotosSearch() {
   const [searchOption, setSearchOption] = useState("caption");
 
   /** Triggered by CaptionSearchForm submit; updates displayedPhotos (array of
-   * photo objects) in parent. */
+   * photo objects) in parent.
+   *
+   * type: string, either "caption" or "metadata"
+   * searchTerm: string
+   * */
 
-  async function handleCaptionSearch(searchTerm) {
-    const filteredPhotos = await PixlyApi.searchCaption(searchTerm);
-    const newPhotoState = {
-      data: [...filteredPhotos],
-      isLoading: false
-    };
-    setPhotosData(newPhotoState);
-  }
-
-  /** Triggered by MetadataSearchForm submit; updates displayedPhotos (array of
-   * photo objects) in parent. */
-
-  async function handleMetadataSearch(formData) {
-    const filteredPhotos = await PixlyApi.searchMetadata(formData);
+  async function handleSearch(type, searchTerm) {
+    const filteredPhotos = await PixlyApi.searchPhoto(type, searchTerm);
     const newPhotoState = {
       data: [...filteredPhotos],
       isLoading: false
@@ -79,11 +71,11 @@ function PhotosSearch() {
 
       {searchOption === "caption"
         ? <CaptionSearchForm
-          searchCaptionsFor={handleCaptionSearch}
+          searchCaptionsFor={handleSearch}
           handleResetSearch={handleResetSearch}
         />
         : <MetadataSearchForm
-          searchMetadataFor={handleMetadataSearch}
+          searchMetadataFor={handleSearch}
           handleResetSearch={handleResetSearch}
         />
       }

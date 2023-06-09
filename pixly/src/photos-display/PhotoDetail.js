@@ -1,6 +1,7 @@
-import React, { useContext } from "react";
-import { Navigate, useParams, useNavigate } from "react-router-dom";
+import React, { useContext, useState, useEffect } from "react";
+import { Link, Navigate, useParams, useNavigate } from "react-router-dom";
 import PixlyApi from "../api";
+import { formatCaption } from "../photos";
 
 import PhotoMetadata from "./PhotoMetadata";
 import photosContext from "../photosContext";
@@ -18,10 +19,21 @@ function PhotoDetail() {
   const { photosData, setPhotosData } = useContext(photosContext);
   const navigate = useNavigate();
 
-  //FIXME: call the backend method to get a photo, JS is very slow at filtering
+  const [foundPhoto, setFoundPhoto] = useState({ data: null, isLoading: true });
 
-  const foundPhoto = photosData.find(photo => photo.id === parseInt(photo_id));
-  if (!foundPhoto) return <Navigate to="/photos" />;
+  /** Call backend method to find requested photo with photo_id. */
+  useEffect(() => {
+    const fetchPhoto = async () => {
+      try {
+        const response = await PixlyApi.getPhoto(photo_id);
+        setFoundPhoto({ data: response, isLoading: false });
+      } catch (error) {
+        return <Navigate to="/photos" />;
+      }
+    };
+
+    fetchPhoto();
+  }, [photo_id]);
 
   /** Triggered by Delete Photo button click; removes photo from system. */
   async function deletePhoto() {
@@ -36,18 +48,19 @@ function PhotoDetail() {
     navigate("/photos");
   }
 
-  //TODO: at some point make the caption uppercase
+  if (foundPhoto.isLoading === true) return (<div>Is loading...</div>);
 
   return (
     <div className="PhotoDetail">
-      <h1>
-        foundPhoto.caption
-      </h1>
+      <h1>{formatCaption(foundPhoto.data.caption)}</h1>
 
-      <PhotoImage photo={foundPhoto} />
-      <PhotoMetadata photo={foundPhoto} />
+      <PhotoImage photo={foundPhoto.data} />
+      <PhotoMetadata photo={foundPhoto.data} />
 
       <button onClick={deletePhoto}>Delete Photo</button>
+      <Link to={`/edit/${foundPhoto.data.id}`}>
+        <button>Edit Photo</button>
+      </Link>
 
     </div>
   );

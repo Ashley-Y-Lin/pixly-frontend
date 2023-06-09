@@ -58,14 +58,16 @@ class PixlyApi {
 
   /** updatePhoto updates a photo in the system.
    *
-   * Takes as input JSON like {"caption": string}
+   * Takes as input JSON like
+   * {caption: string, file_name: string, aws_s3: string, exif_data: object}.
+   * No fields are required.
    *
    * Returns updated photo object in JSON,
    *  like {id, caption, file_name, aws_s3, exif_data}
    */
 
-  static async updatePhoto(photoId, newCaption) {
-    let res = await this.request(`photos/${photoId}`, newCaption, "PATCH");
+  static async updatePhoto(photoId, updateData) {
+    let res = await this.request(`photos/${photoId}`, updateData, "PATCH");
     return res.photo;
   }
 
@@ -92,12 +94,10 @@ class PixlyApi {
   }
 
   /** createEditPreview edits a photo, and saves a preview of edited photo
-   * image in AWS S3. Returns the AWS S3 URL.
+   * image in AWS S3. Returns JSON like
+   * {file_name: string, aws_s3: string, exif_data: object}.
    *
    * editType (param) is a string like "pixelate" or "blackAndWhite"
-   *
-   * Python in backend adds id, aws_link, and exif_data. Returns JSON like
-   * { id, caption, file_name, aws_s3, exif_data }
   */
 
   static async createEditPreview(photoId, editType) {

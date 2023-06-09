@@ -1,5 +1,8 @@
-.PhotoEditButtons{
+.PhotoEditButtons, .PhotoPreview .photoUpdateButtons{
     margin-bottom: 20px;
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
 }
 
 .PhotoPreview .previewImage {

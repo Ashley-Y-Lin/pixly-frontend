@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import PixlyApi from "../api";
 
 import PhotoPreview from "./PhotoPreview";
+import "./PhotoEditOptions.css"
 
 /** Displays editing options for an image. Calls corresponding backend method
  * to do the actual editing. Displays mock edited photo side-by-side with current
@@ -26,8 +27,7 @@ function PhotoEditOptions({ photoData }) {
    */
   async function handleEdit(editType) {
     const previewS3Link = await PixlyApi.createEditPreview(
-      photoData.id,
-      { photoData: photoData, editType: editType }
+      photoData.id, editType
     );
     setPhotoPreviewURL(previewS3Link);
     setEditingImage(true);

@@ -12,10 +12,15 @@ import React from "react";
 //TODO: at some point, store edited image preview as a tempfile for performance
 // and scalability reasons
 
-function PhotoPreview({photoPreviewURL}) {
+function PhotoPreview({ photoPreviewURL }) {
 
   return (
     <div className="PhotoPreview">
+      <img
+        className="previewImage"
+        src={photoPreviewURL}
+        alt="preview"
+      ></img>
     </div>
   );
 

@@ -1,0 +1,7 @@
+.PhotoEditButtons{
+    margin-bottom: 20px;
+}
+
+.PhotoPreview .previewImage {
+    max-width: 300px;
+}
